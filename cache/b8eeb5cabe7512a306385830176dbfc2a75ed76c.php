@@ -12,13 +12,14 @@
     <title>SB Admin 2 - Blank</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="<?php echo base_url("assets/sbadmin/css/sb-admin-2.min.css"); ?>" rel="stylesheet">
+	<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+	
+	<?php echo $__env->yieldContent('head'); ?>
 
 </head>
 
@@ -51,10 +52,40 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
+			<!-- Heading -->
+            <div class="sidebar-heading">
+                Data Master
+            </div>
+
+			
+			<li class="nav-item">
+                <a class="nav-link" href="<?php echo e(base_url('users')); ?>">
+                    <i class="fas fa-fw fa-circle"></i>
+                    <span>Users</span></a>
+            </li>
+
+			<li class="nav-item">
+                <a class="nav-link" href="<?php echo e(base_url('units')); ?>">
+                    <i class="fas fa-fw fa-circle"></i>
+                    <span>Units</span></a>
+            </li>
+
+			<li class="nav-item">
+                <a class="nav-link" href="<?php echo e(base_url('projects')); ?>">
+                    <i class="fas fa-fw fa-circle"></i>
+                    <span>Projects</span></a>
+            </li>
+
+
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
             <div class="sidebar-heading">
                 Interface
             </div>
+            
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -359,8 +390,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+					<?php echo $__env->yieldContent('content'); ?>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -410,15 +440,16 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo e(base_url('assets/sbadmin/vendor/jquery/jquery.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js')); ?>"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="<?php echo e(base_url('assets/sbadmin/vendor/jquery-easing/jquery.easing.min.js')); ?>"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="<?php echo e(base_url('assets/sbadmin/js/sb-admin-2.min.js')); ?>"></script>
 
 </body>
 
-</html><?php /**PATH C:\laragon\www\scrum\application\views/layouts/app.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH D:\laragon\www\scrum\application\views/layouts/app.blade.php ENDPATH**/ ?>

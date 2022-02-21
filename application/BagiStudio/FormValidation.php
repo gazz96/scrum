@@ -9,8 +9,10 @@ class FormValidation extends Validator {
 
     protected $redirect = '';
     protected $validation;
+	protected $request;
 
     public function __construct() {
+		$this->request = $_POST + $_GET + $_FILES;
         $this->registerBaseValidators();
         $this->run();
     }

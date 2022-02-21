@@ -61,7 +61,9 @@ $autoload['packages'] = array();
 $autoload['libraries'] = array(
     'database',
     'session',
-    'user_agent'
+    'user_agent',
+	'table',
+	'pagination'
 );
 
 /*
@@ -99,7 +101,10 @@ $autoload['helper'] = array(
     'array',
     'string',
     'inflector',
-    'text'
+    'text',
+	'main',
+	'form',
+	'string'
 );
 
 /*

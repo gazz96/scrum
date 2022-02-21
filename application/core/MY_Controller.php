@@ -17,6 +17,7 @@ class MY_Controller extends CI_Controller{
 
     public function view($view, $data = []) {
         echo $this->blade->make($view, $data)->render();
+		die();
     }
 
     public function composer($route, $callback){

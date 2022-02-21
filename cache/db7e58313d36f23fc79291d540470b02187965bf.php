@@ -1,1 +1,0 @@
-<?php /**PATH C:\laragon\www\scrum\application\views/modules/user/user-lists.blade.php ENDPATH**/ ?>

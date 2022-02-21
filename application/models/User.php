@@ -1,25 +1,38 @@
 <?php 
 
-class User extends MY_Model {
+namespace App\Models;
 
-    protected $table = "users";
-    protected $primary_key = "id";
+use Illuminate\Database\Eloquent\Model as Eloquent;
+
+class User extends Eloquent {
+
 
     protected $fillable = [
         "role_id",
-        "name"
+        "name",
+		"email",
+		"userpass"
     ];
 
-    public function create($data)  {
-        $data = elements( $this->fillable, $data);
-        return $this->db->insert($this->table, $data);
-    }
+	public function role() {
+		return $this->belongsTo(Role::class);
+	}
 
-    public function delete($id) {
-        return $this->db->delete($this->table, [
-            $this->primary_key => $id
-        ], 1);
-    }
+	public function scopePic( $query ) {
+		$query->where('role_id', 2);
+	}
+	
+	public function scopeMaster( $query ) {
+		$query->where('role_id', 3);
+	}
+
+	public function scopeOwner( $query ) {
+		$query->where('role_id', 4);
+	}
+
+	public function scopeDeveloper( $query ) {
+		$query->where('role_id', 5);
+	}
     
 
 }

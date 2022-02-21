@@ -2,12 +2,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-use App\Models\User;
-use App\Models\Role;
+use App\Models\Unit;
 
-use App\Requests\UserRequest;
+use App\Requests\UnitRequest;
 
-class Users extends MY_Controller 
+class Units extends MY_Controller 
 {
 
 	public function __construct() {
@@ -41,43 +40,38 @@ class Users extends MY_Controller
 		$this->table->set_heading([
 			$this->sort_field('id', 'ID', true),
 			$this->sort_field('name', 'Name', true), 
-			$this->sort_field('email', 'Email', true),
-			'Role', 
 			'Action',
 		]);
 
-		$users = User::with('role');
-		$users->orderBy('id', 'DESC');
-		$users = $users->when(request('sort'), function($query, $value){
+		$units = new Unit;
+		$units->orderBy('id', 'DESC');
+		$units = $units->when(request('sort'), function($query, $value){
 			return $query->orderBy(request('sort_by'), $value);
 		});
 
-		$users = $users->when(request('keyword'), function($query, $value){
+		$units = $units->when(request('keyword'), function($query, $value){
 			return $query->where(request('filter_by'), 'like', '%' . $value . '%');
 		});
 
-		$users = $users->paginate(20);
+		$units = $units->paginate(20);
 
-		foreach($users as $user) 
+		foreach($units as $unit) 
 		{
 			$this->table->add_row([
-				$user->id,
-				$user->name,
-				$user->email,
-				$user->role->name, 
+				$unit->id,
+				$unit->name,
 				"
-					<a href='" . base_url('users/edit/' . $user->id) . "' class='btn btn-warning'>
+					<a href='" . base_url('units/edit/' . $unit->id) . "' class='btn btn-warning'>
 						<span class='fas fa-edit'></span>
 					</a>
-					<a href='" . base_url('users/delete/' . $user->id ) . "' class='btn btn-danger'>
+					<a href='" . base_url('units/delete/' . $unit->id ) . "' class='btn btn-danger'>
 						<span class='fas fa-trash'></span>
 					</a>
 				"
 			]);
 		}
 
-		$this->view('modules.user.lists', [
-			'roles' => Role::all(),
+		$this->view('modules.unit.lists', [
 			'table' => $this->table->generate()
 		]);
 
@@ -85,47 +79,43 @@ class Users extends MY_Controller
 
     public function create() 
 	{
-		$this->view('modules.user.create', [
-			'roles' => Role::all()
-		]);
+		$this->view('modules.unit.create');
     }
 
     public function store() 
 	{
-		$request 	= new UserRequest;
+		$request 	= new UnitRequest;
 		$data 		= $request->validated();	
-		$user 		= User::create( $data );
+		$user 		= Unit::create( $data );
 		$this->session->set_flashdata('message', 'Berhasil menyimpan');
-		redirect(base_url('/users'));
+		redirect(base_url('/units'));
     }
 
     public function edit( $id ) 
 	{
-		$user = User::findOrFail( $id );
-		$this->view('modules.user.edit', [
-			'user' => $user,
-			'roles' => Role::all()
+		$unit = Unit::findOrFail( $id );
+		$this->view('modules.unit.edit', [
+			'unit' => $unit,
 		]);
     }
 
-    public function update( $id ) 
-	{
-		$request 	= new UserRequest;
+    public function update( $id ) {
+		$request 	= new UnitRequest;
 		$data 		= $request->validated();	
 		
 		if( ! $data['password'] ) unset($data['password']);
 
-		$user 		= User::findOrFail( $id );
-		$user->update( $data );
+		$Unit 		= Unit::findOrFail( $id );
+		$Unit->update( $data );
 		
 		$this->session->set_flashdata('message', 'Berhasil memperbaharui');
-		redirect(base_url('/users/edit/' . $id ));
+		redirect(base_url('/units/edit/' . $id ));
     }
 
-    public function delete( $id ) 
-	{
-        $user = User::findOrFail( $id );
-		$user->delete();
+    public function delete( $id ) {
+        $unit = Unit::findOrFail( $id );
+		$unit->delete();
+		$this->session->set_flashdata('message', 'Berhasil menghapus');
 		back();
     }
 
