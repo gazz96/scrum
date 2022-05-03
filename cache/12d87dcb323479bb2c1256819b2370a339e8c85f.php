@@ -2,7 +2,7 @@
 
 	<!-- Page Heading -->
 	<div class="d-flex align-items-center mb-4">
-		<h1 class="h3 text-gray-800 font-weight-bold mr-3 mb-0">Edit User</h1>
+		<h1 class="h3 text-gray-800 font-weight-bold mr-3 mb-0">Edit Project</h1>
 		<a href="<?php echo e(base_url('projects')); ?>" class="btn btn-sm btn-secondary">Kembali</a>
 	</div>
 	<form method="POST" action="<?php echo e(base_url('projects/update/' . $project->id)); ?>">

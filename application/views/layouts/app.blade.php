@@ -448,6 +448,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ base_url('assets/sbadmin/js/sb-admin-2.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+    <script>
+        window.BASE_URL = "{{base_url()}}";
+    </script>
+
+    @yield('footer')
 
 </body>
 

@@ -43,6 +43,22 @@
 						</div>
 
 						<div class="form-group">
+							<label for="i-period_start">Rencana Tanggal Mulai</label>
+							<input type="date" name="period_start" class="form-control" id="i-period_start" value="">
+							<?php if(errors('period_start')): ?>
+							<div class="invalid-feedback d-block"><?php echo e(errors('period_start')); ?></div>
+							<?php endif; ?>
+						</div>
+
+						<div class="form-group">
+							<label for="i-period_end">Rencana Tanggal Selesai</label>
+							<input type="date" name="period_end" class="form-control" id="i-period_end" value="">
+							<?php if(errors('period_end')): ?>
+							<div class="invalid-feedback d-block"><?php echo e(errors('period_end')); ?></div>
+							<?php endif; ?>
+						</div>
+
+						<div class="form-group">
 							<label for="i-status">Status</label>
 							<select name="status" id="status" class="form-control" id="i-status">
 								<option value="">Pilih</option>
