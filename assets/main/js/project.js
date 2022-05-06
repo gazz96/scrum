@@ -1,7 +1,21 @@
 $(function(){
-    console.log(BASE_URL)
+
+    
+    let CardItemFields = {
+        id: null,
+        description: null,
+        status: null
+    }
 
     let Project  = {
+        Models: {
+            getDetail: () => {
+
+            },
+            getTaks: () => {
+
+            }
+        },
         View: {
         
         }
@@ -33,6 +47,12 @@ $(function(){
                     data: data,
                 })
             },
+            delete: async( id ) => {
+                return $.ajax({
+                    url: `${BASE_URL}api/cards/delete/${id}`,
+                    method: 'GET',
+                })
+            },
             listItems: async(data) => {
                 return $.ajax({
                     url: `${BASE_URL}api/carditems`,
@@ -46,27 +66,46 @@ $(function(){
                     data: data,
                 })
             },
+            updateItem: async ( id, data ) => {
+                return $.ajax({
+                    url: `${BASE_URL}api/carditems/update/${id}`,
+                    method: 'POST',
+                    data: data,
+                })
+            },
             getItem: async( id ) => {
                 return $.ajax({
                     url: `${BASE_URL}api/carditems/edit/${id}`,
-                    method: 'GETT',
+                    method: 'GET',
+                })
+            },
+            deleteItem: async( id ) => {
+                return $.ajax({
+                    url: `${BASE_URL}api/carditems/delete/${id}`,
+                    method: 'GET',
                 })
             }
         },
         Views: {
             addList: (list) => {
                 return `
-                <div class="col-md-3 mb-3">
+                <div class="col-card card-item mb-3">
                     <div class="card-wrapper">
-                        <div class="card" data-list_id="${list.id}">
-                            <div class="card-header"  aria-expanded="false" data-target="#card-collapse-${list.id}">
+                        <div class="card shadow" data-list_id="${list.id}">
+                            <div class="card-header d-flex justify-content-between"  aria-expanded="false" data-target="#card-collapse-${list.id}">
                                 <p class="mb-0">${list.title}</p>
+                                <div class="dropdown" style="z-index: 5">
+                                    <a href="" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
+                                    <div class="dropdown-menu">
+                                        <a href="javascript:void(0)" class="dropdown-item delete-list" data-id="${list.id}">Delete</a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="" id="card-collapse-${list.id}">
                                 <div class="card-items" data-list_id="${list.id}"></div>
                             </div>
                             <div class="px-3 py-2">
-                                <a href="#" class="btn btn-sm btn-add-new-card" data-list_id="${list.id}"><span class="fas fa-plus pr-2"></span>Tambah card</a>
+                                <a href="#" class="btn btn-sm btn-add-new-card" data-list_id="${list.id}"><span class="fas fa-plus pr-2"></span>Tambah task</a>
                             </div>
                         </div>
                     </div>
@@ -76,7 +115,7 @@ $(function(){
             addCardItemInput: () => {
                 return `
                     <div class="px-3 py-2">
-                        <textarea class="mb-0 form-control card-item-input" placeholder="Enter title for this card"></textarea>
+                        <textarea class="mb-0 form-control card-item-input" placeholder="Masukan nama item"></textarea>
                     </div>
                 `
             },
@@ -84,8 +123,8 @@ $(function(){
                 return`
                 <div class="px-2 pt-2">
                    
-                    <a href="javascript:void(0)" class="mb-0 card-item border mb-2 d-block px-3 py-2" data-item_id="${item.id}">
-                        ${Card.Views.cardItemStatus(item.status)}
+                    <a href="javascript:void(0)" class="mb-0 card-item shadow border mb-2 d-block px-3 py-2" data-item_id="${item.id}">
+                        <div class="card-item-status">${Card.Views.cardItemStatus(item.status)}</div>
                         <p class="mb-0">${item.name}</p>
                     </a>
                 </div>
@@ -93,7 +132,7 @@ $(function(){
             },
             cardItemStatus: (status = null) => {
 
-                if( ! status ) return status;
+                if( ! status  ) return '';
 
                 if( status == "To Do") {
                     return `
@@ -128,7 +167,7 @@ $(function(){
                     project_id: $('#i-project_id').val()
                 })
                 cards.map( async(card,i) => {
-                    $('#project-wrapper').append(Card.Views.addList(card));
+                    $('#project-wrapper').prepend(Card.Views.addList(card));
                     let cardItems = await Card.Models.listItems({
                         'card_id':  card.id
                     })
@@ -143,6 +182,8 @@ $(function(){
         }
     }
 
+    
+
 
     Card.Helpers.loadList();
 
@@ -152,9 +193,9 @@ $(function(){
 
         // create card
         let card = await Card.Models.create(data);
-
+        $(this).find('input[name=title]').val('');
         // add list to view
-        $('#project-wrapper').append(Card.Views.addList(card));
+        $('#project-wrapper').prepend(Card.Views.addList(card));
     })
 
     $(document).on('click', '.btn-add-new-card', function(e){
@@ -176,15 +217,17 @@ $(function(){
 
     $(document).on('click', '.card-item', async function(e){
         e.preventDefault();
-        let id = $(this).data('item_id');
-        let cardItem = await Card.Models.getItem(id);
+        
+        CardItemFields = await Card.Models.getItem($(this).data('item_id'));
         let cardItemDetailModal = $('#card-item-detail');
-        cardItemDetailModal.find('.modal-title').html(cardItem.name);
+        cardItemDetailModal.find('.modal-title').find('input').val(CardItemFields.name);
+        cardItemDetailModal.find('#i-description').val(CardItemFields.description);
+        cardItemDetailModal.find('#i-status').val(CardItemFields.status);
         cardItemDetailModal.modal('show');
 
     })
 
-    $('#card-item-detail').modal('show');
+    //$('#card-item-detail').modal('show');
     
     $('.member-search').keypress( async function(e){
         if(e.which == 13) {
@@ -216,5 +259,52 @@ $(function(){
     $(document).on('click', '.member-search-result a', function(){
         let user_id = $(this).data('user_id');
         let clone = $(this).clone();
+    })
+
+    $('#card-item-modal-form').submit(async function(e){
+        e.preventDefault();
+
+        let btn = $(this).find('button');btn.html('loading....');
+
+        CardItemFields = await Card.Models.updateItem(CardItemFields.id, {
+            name: $('#i-name').val(),
+            description: $('#i-description').val(),
+            status: $('#i-status').val()
+        })
+
+        console.log(CardItemFields);
+
+        let CardItem = $(`.card-item[data-item_id=${CardItemFields.id}]`);
+        
+        CardItem
+            .find('.card-item-status')
+            .html(Card.Views.cardItemStatus(CardItemFields.status))
+
+        CardItem.find('p').text(CardItemFields.name)
+    
+        btn.html('save');
+    })
+
+    $(document).on('click', '#delete-card-item', async function(e){
+        e.preventDefault();
+        let btn = $(this).find('button');btn.html('loading....');
+        await Card.Models.deleteItem(CardItemFields.id);
+
+        let cardItemDetailModal = $('#card-item-detail');
+        let CardItem = $(`.card-item[data-item_id=${CardItemFields.id}]`);
+
+        CardItem.remove();
+
+        cardItemDetailModal.find('.modal-title').find('input').val('');
+        cardItemDetailModal.find('#i-description').val('')
+        cardItemDetailModal.modal('hide');
+
+        btn.html('delete');
+    })
+
+    $(document).on('click', '.delete-list', async function(e){
+        e.preventDefault();
+        await Card.Models.delete($(this).data('id'));
+        $(this).closest('.card-wrapper').parent().remove();
     })
 })

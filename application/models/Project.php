@@ -12,7 +12,9 @@ class Project extends Eloquent {
 		"pic_id",
 		"master_id",
 		"owner_id",
-		"status"
+		"status",
+		"start_date",
+		"end_date"
     ];
 
 	public function role() {

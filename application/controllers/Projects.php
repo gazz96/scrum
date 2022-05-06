@@ -66,7 +66,7 @@ class Projects extends MY_Controller
 			'units' 	 => Unit::all(),
 			'pics' 		 => User::pic()->get(),
 			'masters' 	 => User::master()->get(),
-			'owners' 	 => User::owner()->get()
+			'owners' 	 => User::customer()->get()
 		]);
     }
 
@@ -115,10 +115,6 @@ class Projects extends MY_Controller
 
 		$this->view('modules.project.show', [
 			'project' 	 => $project,
-			'units' 	 => Unit::all(),
-			'pics' 		 => User::pic()->get(),
-			'masters' 	 => User::master()->get(),
-			'owners' 	 => User::owner()->get()
 		]);
 	}
 

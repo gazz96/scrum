@@ -14,12 +14,13 @@
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
+ 
     <!-- Custom styles for this template-->
     <link href="<?php echo base_url("assets/sbadmin/css/sb-admin-2.min.css"); ?>" rel="stylesheet">
 	<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 	
-	<?php echo $__env->yieldContent('head'); ?>
+    <link rel="stylesheet" href="<?php echo e(base_url('/assets/main/plugins/datatables/datatables.min.css')); ?>">
+	<?php echo $__env->yieldContent('header'); ?>
 
 </head>
 
@@ -57,11 +58,16 @@
                 Data Master
             </div>
 
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo e(base_url('customers')); ?>">
+                    <i class="fas fa-fw fa-circle"></i>
+                    <span>Customers</span></a>
+            </li>
 			
 			<li class="nav-item">
                 <a class="nav-link" href="<?php echo e(base_url('users')); ?>">
                     <i class="fas fa-fw fa-circle"></i>
-                    <span>Users</span></a>
+                    <span>My Team</span></a>
             </li>
 
 			<li class="nav-item">
@@ -440,6 +446,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
+    
     <script src="<?php echo e(base_url('assets/sbadmin/vendor/jquery/jquery.min.js')); ?>"></script>
     <script src="<?php echo e(base_url('assets/sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js')); ?>"></script>
 
@@ -448,8 +455,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?php echo e(base_url('assets/sbadmin/js/sb-admin-2.min.js')); ?>"></script>
-    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-
+    <script src="<?php echo e(base_url('assets/main/plugins/datatables/datatables.min.js')); ?>"></script>
     <script>
         window.BASE_URL = "<?php echo e(base_url()); ?>";
     </script>

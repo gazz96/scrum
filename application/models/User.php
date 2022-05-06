@@ -26,7 +26,7 @@ class User extends Eloquent {
 		$query->where('role_id', 3);
 	}
 
-	public function scopeOwner( $query ) {
+	public function scopeCustomer( $query ) {
 		$query->where('role_id', 4);
 	}
 
