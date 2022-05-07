@@ -69,7 +69,7 @@
     <div class="col-12">
         <div class="card shadow">
             <div class="card-body">
-                <a href="#" class="btn btn-sm btn-outline-primary mb-3">Tambah Invoice</a>
+                <a href="#modal-form-invoice" class="btn btn-sm btn-outline-primary mb-3"  data-toggle="modal">Tambah Invoice</a>
                 <h6 class="font-weight-bold">Invoices</h6>
                 <div class="table-responsive">
                     <table class="table table-sm table-bordered">

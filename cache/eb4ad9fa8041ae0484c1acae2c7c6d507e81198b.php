@@ -49,8 +49,8 @@
     
     
 
-<!-- Modal -->
-<div class="modal fade" id="card-item-detail" tabindex="-1" role="dialog" aria-labelledby="card-item-detail" aria-hidden="true">
+<!-- Modal Project -->
+<div class="modal fade" id="card-item-detail" role="dialog" aria-labelledby="card-item-detail" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="text-right position-relative px-3 py-2 mb-3">
@@ -103,6 +103,52 @@
     </div>
 </div>
 
+<form action="">
+    <!-- Modal Invoice -->
+    <div class="modal fade" id="modal-form-invoice" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Invoice</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="i-customer_id">Customer</label>
+                            <select name="customer_id" id="i-customer_id" class="form-control w-100" style="width: 100%">
+                            
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="i-issue_date">Issue Date</label>
+                            <input type="date" name="issue_date" id="i-issue_date" class="form-control">
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            <label for="i-due_date">Issue Date</label>
+                            <input type="date" name="due_date" id="i-due_date" class="form-control">
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
 <?php $__env->stopSection(); ?>
 
 
@@ -110,6 +156,30 @@
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="<?php echo e(base_url('assets/main/js/project.js')); ?>"></script>
+
+<script>
+
+
+$(function(){
+
+ 
+    $('#i-customer_id').select2({
+        dropdownCssClass: "custom-dropdown"
+    }).on("select2:open", function (e) {
+        var self = $(this);
+        self.on('keyup', function(){
+        })
+    });
+    
+    $(document).on('keyup', '.custom-dropdown .select2-search__field', function (e) {
+        var self = $(this);
+        console.log(self.val());
+        
+    });
+});
+
+
+</script>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\laragon\www\scrum\application\views/modules/project/show.blade.php ENDPATH**/ ?>

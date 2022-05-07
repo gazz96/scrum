@@ -76,6 +76,12 @@
                     <span>Units</span></a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ base_url('invoices') }}">
+                    <i class="fas fa-fw fa-circle"></i>
+                    <span>Invoices</span></a>
+            </li>
+
 			<li class="nav-item">
                 <a class="nav-link" href="{{ base_url('projects') }}">
                     <i class="fas fa-fw fa-circle"></i>
