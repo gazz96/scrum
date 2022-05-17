@@ -7,27 +7,28 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class Project extends Eloquent {
 
     protected $fillable = [
+		"code",
         "name",
-        "unit_id",
-		"pic_id",
-		"master_id",
-		"owner_id",
-		"status",
+        "customer_id",
 		"start_date",
-		"end_date"
+		"end_date",
+		"status"
     ];
 
-	public function role() {
-		return $this->belongsTo(Role::class);
+	protected $appends = [
+		'deadline'
+	];
+
+	public function customer() {
+		return $this->belongsTo(User::class, 'customer_id', );
 	}
 
-	public function unit() {
-		return $this->belongsTo(Unit::class);
+	public function cards() {
+		return $this->hasMany(Card::class);
 	}
 
-	public function scopeOwner( $query ) {
-		return $query->where('role_id', 4);
+	public function getDeadlineAttribute() {
+		return (strtotime($this->end_date) - strtotime(date('Y-m-d')))/60/60/24;
 	}
-    
 
 }

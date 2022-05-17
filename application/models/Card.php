@@ -11,6 +11,12 @@ class Card extends Eloquent {
         "title",
     ];
 
+	public function items() {
+		return $this->hasMany(CardItem::class, 'card_id', 'id');
+	}
+
+
+
 	public function role() {
 		return $this->belongsTo(Role::class);
 	}
@@ -21,6 +27,10 @@ class Card extends Eloquent {
 
 	public function scopeOwner( $query ) {
 		return $query->where('role_id', 4);
+	}
+
+	public function scopeFinished($query) {
+		return $query->where('status', 'Completed');
 	}
     
 

@@ -15,20 +15,19 @@ class Invoice extends Eloquent {
         "payment_note",
         "customer_id",
         "receive_amount",
+        "total_amount",
         "status"
     ];
 
-	public function role() {
-		return $this->belongsTo(Role::class);
+
+    public function customer() {
+        return $this->belongsTo(User::class);
+    }
+
+	public function project() {
+		return $this->belongsTo(Project::class);
 	}
 
-	public function projects() {
-		return $this->belongsTo(Unit::class);
-	}
-
-	public function scopeOwner( $query ) {
-		return $query->where('role_id', 4);
-	}
     
 
 }

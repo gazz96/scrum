@@ -18,7 +18,8 @@
 		"firebase/php-jwt": "^5.5",
 		"optimus/onion": "~1.0",
 		"illuminate/database": "^8.83",
-		"illuminate/pagination": "^8.83"
+		"illuminate/pagination": "^8.83",
+		"guzzlehttp/guzzle": "7.0"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

@@ -19,44 +19,16 @@ class Projects extends MY_Controller
 	}
 
 
-	private function sort_field( $id, $label, $sort = false) 
-	{
 
-		if( $sort ) {
-			$order = "ASC";
-			if( request('order') == "ASC") {
-				$order = "DESC";
-			}else {
-				$order = "ASC";
-			}
-			return "<a href='?sort_by={$id}&sort={$order}'>{$label}</a>";
-		}
-		return $label;
-	}
 
 	
 
     public function index() 
 	{
-	
-		$projects = Project::query();
-		$projects->orderBy('id', 'DESC');
-		$projects = $projects->when(request('sort'), function($query, $value){
-			return $query->orderBy(request('sort_by'), $value);
-		});
-
-		$projects = $projects->when(request('keyword'), function($query, $value){
-			return $query->where(request('filter_by'), 'like', '%' . $value . '%');
-		});
-
-		$projects = $projects->paginate(20);
 
 		
 
-		$this->view('modules.project.lists', [
-			'units' => Unit::all(),
-			'projects' => $projects
-		]);
+		$this->view('modules.project.lists');
 
     }
 

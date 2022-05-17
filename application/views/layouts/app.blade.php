@@ -14,12 +14,16 @@
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
- 
+
+    
     <!-- Custom styles for this template-->
     <link href="<?php echo base_url("assets/sbadmin/css/sb-admin-2.min.css"); ?>" rel="stylesheet">
-	<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ base_url('/assets/main/plugins/datatables/datatables.min.css') }}" rel="stylesheet" >
+
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 	
-    <link rel="stylesheet" href="{{ base_url('/assets/main/plugins/datatables/datatables.min.css') }}">
+    
 	@yield('header')
 
 </head>
@@ -70,11 +74,11 @@
                     <span>My Team</span></a>
             </li>
 
-			<li class="nav-item">
+			{{-- <li class="nav-item">
                 <a class="nav-link" href="{{ base_url('units') }}">
                     <i class="fas fa-fw fa-circle"></i>
                     <span>Units</span></a>
-            </li>
+            </li> --}}
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ base_url('invoices') }}">
@@ -91,16 +95,16 @@
 
 
 			<!-- Divider -->
-			<hr class="sidebar-divider">
+			{{-- <hr class="sidebar-divider"> --}}
 
 			<!-- Heading -->
-            <div class="sidebar-heading">
+            {{-- <div class="sidebar-heading">
                 Interface
-            </div>
+            </div> --}}
             
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
@@ -113,10 +117,10 @@
                         <a class="collapse-item" href="cards.html">Cards</a>
                     </div>
                 </div>
-            </li>
+            </li> --}}
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
@@ -132,18 +136,18 @@
                         <a class="collapse-item" href="utilities-other.html">Other</a>
                     </div>
                 </div>
-            </li>
+            </li> --}}
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            {{-- <hr class="sidebar-divider"> --}}
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            {{-- <div class="sidebar-heading">
                 Addons
-            </div>
+            </div> --}}
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
+            {{-- <li class="nav-item active">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
                     aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -162,21 +166,21 @@
                         <a class="collapse-item active" href="blank.html">Blank Page</a>
                     </div>
                 </div>
-            </li>
+            </li> --}}
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
-            </li>
+            </li> --}}
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tables</span></a>
-            </li>
+            </li> --}}
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -462,6 +466,9 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ base_url('assets/sbadmin/js/sb-admin-2.min.js') }}"></script>
     <script src="{{ base_url('assets/main/plugins/datatables/datatables.min.js') }}"></script>
+    <script src="https://unpkg.com/currency.js@2.0.4/dist/currency.min.js"></script>
+    
+    <script src="{{ base_url('assets/main/js/helper.js') }}"></script>
     <script>
         window.BASE_URL = "{{base_url()}}";
     </script>

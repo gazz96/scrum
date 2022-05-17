@@ -8,8 +8,6 @@ class Customers extends MY_Controller {
 
     public function index() {
 
-        //var_dump($this->input->get());
-        
         $customers = User::with('role')->customer();
         $columns = $this->input->get('columns');
 		$customers = $customers->when( $this->input->get('order'), function($query, $value) use( $columns ){
