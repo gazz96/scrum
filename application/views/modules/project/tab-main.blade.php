@@ -72,18 +72,7 @@
                 <a href="#modal-form-invoice" class="btn btn-sm btn-outline-primary mb-3"  data-toggle="modal">Tambah Invoice</a>
                 <h6 class="font-weight-bold">Invoices</h6>
                 <div class="table-responsive">
-                    <table class="table table-sm table-bordered" id="table-invoice">
-                        {{-- <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Customer</th>
-                                <th>Issue Date</th>
-                                <th>Due Date</th>
-                                <th>Status</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead> --}}
-                    </table>
+                    <table class="table table-sm table-bordered" id="table-invoice"></table>
                 </div>
             </div>
         </div>

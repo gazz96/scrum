@@ -5,6 +5,7 @@
 <style>
     .col-card {
         min-width: 300px;
+        max-width: 300px;
         margin-right: 16px
     }
 </style>
@@ -70,14 +71,7 @@
                             <textarea name="description" id="i-description"  rows="3" class="form-control"></textarea>
                         </div>
 
-                        {{-- <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="i-assign_to">Assign To</label>
-                                <input type="text" class="form-control member-search">
-                                <div class="member-search-result"></div>
-                                <div class="member-search-added"></div>
-                            </div>
-                        </div> --}}
+
                         
                         <div class="row">
                             <div class="form-group col-md-6">

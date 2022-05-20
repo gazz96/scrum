@@ -5,6 +5,7 @@
 <style>
     .col-card {
         min-width: 300px;
+        max-width: 300px;
         margin-right: 16px
     }
 </style>
@@ -68,7 +69,7 @@
                             <textarea name="description" id="i-description"  rows="3" class="form-control"></textarea>
                         </div>
 
-                        
+
                         
                         <div class="row">
                             <div class="form-group col-md-6">

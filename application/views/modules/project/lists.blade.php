@@ -115,7 +115,7 @@
 
 $(function(){
 
-	let idEdit = false;
+	let isEdit = false;
 	let tableProjects;
 	let ProjectFields = {
 		id: null,
@@ -235,10 +235,11 @@ $(function(){
                 },
                 dataFilter: (data) => {
                     var json = jQuery.parseJSON( data );
+					console.log(json.data);
                     json.recordsTotal = json.total;
                     json.recordsFiltered = json.total;
-                    json.data = json.data.map(project => [ 
-						project.id, project.code, project.name, project.customer.name, 
+                    json.data = json.data.map(project => [
+						project.id, project.code, project.name, (project.customer) ? project.customer.name : '', 
 						project.start_date, project.end_date, project.status 
 					]);
                     json.draw = json.draw;

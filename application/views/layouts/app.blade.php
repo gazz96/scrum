@@ -83,13 +83,22 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ base_url('invoices') }}">
                     <i class="fas fa-fw fa-circle"></i>
-                    <span>Invoices</span></a>
+                    <span>Invoices</span>
+                </a>
             </li>
 
 			<li class="nav-item">
                 <a class="nav-link" href="{{ base_url('projects') }}">
                     <i class="fas fa-fw fa-circle"></i>
-                    <span>Projects</span></a>
+                    <span>Projects</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ base_url('attendances') }}">
+                    <i class="fas fa-fw fa-circle"></i>
+                    <span>Attendances</span>
+                </a>
             </li>
 
 
@@ -415,13 +424,13 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            {{-- <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
-            </footer>
+            </footer> --}}
             <!-- End of Footer -->
 
         </div>

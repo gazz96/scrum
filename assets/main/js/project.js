@@ -31,7 +31,7 @@ $(function(){
                     deadline = "Hari ini";
                 }
 
-                let percentage = (parseFloat(tasks.completed)/parseFloat(tasks.total));
+                let percentage = (parseFloat(tasks.completed)/parseFloat(tasks.total))*100;
                 if(isNaN(percentage)) percentage = 0;
 
                 $('#project-deadline').html(`${project.deadline} Hari`);
@@ -112,7 +112,7 @@ $(function(){
         Views: {
             addList: (list) => {
                 return `
-                <div class="col-card card-item mb-3">
+                <div class="col-card mb-3">
                     <div class="card-wrapper">
                         <div class="card shadow" data-list_id="${list.id}">
                             <div class="card-header d-flex justify-content-between"  aria-expanded="false" data-target="#card-collapse-${list.id}">
@@ -220,7 +220,10 @@ $(function(){
 
     $(document).on('click', '.btn-add-new-card', function(e){
         e.preventDefault();
-        $(this).parent().prev().find('.card-items').append(Card.Views.addCardItemInput());
+        let cardItemInput = $(this).parent().prev().find('.card-item-input');
+        if( !cardItemInput.length ) {
+            $(this).parent().prev().find('.card-items').append(Card.Views.addCardItemInput());
+        }
     })
 
     $(document).on('keypress', '.card-item-input', async function(e){
