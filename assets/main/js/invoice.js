@@ -5,6 +5,8 @@ $(function(){
     let tableInvoice;
     let isEdit = false;
 
+    let customerIdSelect;
+
     window.Invoice =  {
         Fields: {
             id: null,
@@ -64,6 +66,7 @@ $(function(){
                     <div class="dropdown-menu">
                         <a class="dropdown-item edit-action" data-id="${row[0]}" href="#">Edit</a>
                         <a class="dropdown-item delete-action" data-id="${row[0]}" href="#">Delete</a>
+                        <a class="dropdown-item" href="${BASE_URL}api/invoice/payment-link/${row[0]}" target="_blank">Payment Link</a>
                     </div>
                 </div>                
                 `
@@ -72,7 +75,6 @@ $(function(){
         Helpers: {
             init: async () => {
     
-                
                 Invoice.Fields.project_id = $('#i-project_id').val();
     
     
@@ -117,9 +119,9 @@ $(function(){
                             var json = jQuery.parseJSON( data );
                             json.recordsTotal = json.total;
                             json.recordsFiltered = json.total;
-                            
+                            console.log(json.data);
                             json.data = json.data.map(invoice => [ 
-                                invoice.id, invoice.customer.name || '-', invoice.issue_date, 
+                                invoice.id, ((invoice.customer) ? invoice.customer.name : '-'), invoice.issue_date, 
                                 invoice.due_date, invoice.status, Rp(invoice.total_amount)
                             ]);
                             json.draw = json.draw;
@@ -127,19 +129,98 @@ $(function(){
                         }
                     }
                 });
+
+                
+                
+                customerIdSelect = $('.maintab-customer_id').select2({
+
+                    width: '100%',
+                    ajax: {
+                        url: BASE_URL + '/api/customers',
+                        processResults: function (data) {
+                            console.log(data);
+                            // Transforms the top-level key of the response object from 'items' to 'results'
+                            let customers = data.data;
+                            let results = [];
+
+                            customers.map(customer => {
+                                results.push({
+                                    id: customer.id,
+                                    text: customer.name + ' ' + customer.email
+                                })
+                            })
+
+                            return {
+                                results: results
+                            };
+                        },
+                        data: function (params) {
+                            var query = {
+                            // search: params.term,
+                            // page: params.page || 1
+                            }
+                    
+                            // Query parameters will be ?search=[term]&page=[page]
+                            return query;
+                        }
+                    }
+                })
             },
             setForm: ( data ) => {
-                for(let key in data) {f
+                for(let key in data) {
                     $('#i-' + key).val(data[key]);
-                    if(key == "customer_id") {
-                        $('#i-customer_autocomplete').val(`${data.customer_id} - ${data.customer.name} (${data.customer.email})`)
-                    }
                 }
             },
             resetForm: () => {
                 isEdit = false;
                 $('#form-invoice')[0].reset();
                 $('#modal-form-invoice').find('.btn-primary').html('Save');
+            },
+            customerSelection: ( element ) => {
+                return $(element).select2({
+
+                    width: '100%',
+                    ajax: {
+                        url: BASE_URL + '/api/customers',
+                        processResults: function (data) {
+                            let customers = data.data;
+                            let results = [];
+
+                            customers.map(customer => {
+                                results.push({
+                                    id: customer.id,
+                                    text: customer.name + ' ' + customer.email
+                                })
+                            })
+
+                            return {
+                                results: results
+                            };
+                        },
+                        data: function (params) {
+                            var query = {
+                            // search: params.term,
+                            // page: params.page || 1
+                            }
+                    
+                            // Query parameters will be ?search=[term]&page=[page]
+                            return query;
+                        }
+                    }
+                })
+            },
+            customerPreselection: (id, text) => {
+                // add options
+                var option = new Option( text, id, true, true);
+                let customerIdSelect = Invoice.Helpers.customerSelection().append(option).trigger('change');
+            
+                // manually trigger the `select2:select` event
+                customerIdSelect.trigger({
+                    type: 'select2:select',
+                    params: {
+                        data: {}
+                    }
+                });
             }
         }
     }
@@ -158,7 +239,7 @@ $(function(){
             status: form.find('#i-status').val(),
             total_amount: form.find('#i-total_amount').val(),
         };
-        console.log( data )
+
         if( ! isEdit ) {
             
             let invoice = await Invoice.Models.create(data);
@@ -175,9 +256,12 @@ $(function(){
         Invoice.Fields = await Invoice.Models.edit($(this).data('id'));
         Invoice.Helpers.setForm(Invoice.Fields);
         isEdit = true;
-        console.log(isEdit);
+
+        
+
         $('#modal-form-invoice').modal('show');
         $('#modal-form-invoice').find('.btn-primary').html('Update');
+        
     })
 
     $(document).on('click', '.delete-action', async function(e){

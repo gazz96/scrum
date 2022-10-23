@@ -121,6 +121,10 @@ class Invoices extends MY_Controller {
         $this->output->_display();
         exit; 
     }
+
+    public function payment_link($id) {
+        
+    }
     
 
 }

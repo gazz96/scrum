@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 07, 2022 at 03:21 AM
+-- Generation Time: Oct 23, 2022 at 04:48 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_scrum`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendances`
+--
+
+CREATE TABLE `attendances` (
+  `id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `start_work` datetime DEFAULT NULL,
+  `end_work` datetime DEFAULT NULL,
+  `start_rest` datetime DEFAULT NULL,
+  `end_rest` datetime DEFAULT NULL,
+  `note` text,
+  `location` text,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -74,7 +93,9 @@ CREATE TABLE `cards` (
 --
 
 INSERT INTO `cards` (`id`, `project_id`, `title`, `created_at`, `updated_at`) VALUES
-(33, 1, 'Site Visit', '2022-05-05 05:43:50', '2022-05-05 05:43:50');
+(1, 3, 'Main Section', '2022-05-14 02:23:32', '2022-05-14 02:23:32'),
+(2, 4, 'Revisi', '2022-05-19 19:33:15', '2022-05-19 19:33:15'),
+(3, 3, 'Secondary Section', '2022-06-03 20:50:49', '2022-06-03 20:50:49');
 
 -- --------------------------------------------------------
 
@@ -121,8 +142,16 @@ INSERT INTO `card_items` (`id`, `card_id`, `name`, `description`, `status`, `cre
 (6, NULL, 'asdasda', NULL, '', '2022-05-03 03:50:42', '2022-05-03 03:50:42'),
 (7, NULL, 'xvxvxv', NULL, '', '2022-05-03 03:51:05', '2022-05-03 03:51:05'),
 (8, NULL, 'ad', NULL, '', '2022-05-03 04:40:40', '2022-05-03 04:40:40'),
-(25, 33, 'Visit Gudang 1 di Peleburan', NULL, NULL, '2022-05-05 05:44:13', '2022-05-05 05:44:13'),
-(26, 33, 'Visit Gudang 2 di Paritohan', NULL, NULL, '2022-05-05 05:44:23', '2022-05-05 05:44:23');
+(11, 1, 'Item', '', 'Completed', '2022-05-15 04:35:43', '2022-05-15 04:37:40'),
+(12, 1, 'Item', '', 'Completed', '2022-05-15 04:35:43', '2022-06-03 20:48:28'),
+(13, 1, 'Item', NULL, NULL, '2022-05-15 04:35:51', '2022-05-15 04:35:51'),
+(14, 2, 'Rubah website font. Use Quicken Font ', NULL, NULL, '2022-05-19 19:33:30', '2022-05-19 19:33:30'),
+(15, 2, 'VA Loan Forms', ' - Gunakan icon dimana memungkinkan, masih banyak yg text (more user friendly)\n - Beberapa Buttons perlu dibuat centered\n - Slider dibagian yg input nominal $:\n     Minimum number $100,000\n     Maximum number $2,000,0000\n     slide increment $25,000', '', '2022-05-19 19:33:37', '2022-05-19 19:33:54'),
+(16, 2, 'Pop-Up agreement to accept cookies', ' (check plugin WP yg cocok, cth: https://wordpress.org/plugins/cookie-law-info/)', 'Completed', '2022-05-19 19:34:05', '2022-05-20 03:04:47'),
+(17, 2, 'Tolong periksa lagi no telp pastikan  833-888-3863', '', 'Completed', '2022-05-19 19:34:26', '2022-05-20 03:05:00'),
+(18, 2, ' Masih ada beberapa link ke justfundedmortgage.com dan unitemortgage.com', '', 'Completed', '2022-05-19 19:34:37', '2022-05-20 03:05:04'),
+(19, 2, 'Tulisan VA pastikan pakai huruf kapital VA', '', 'Completed', '2022-05-19 19:35:29', '2022-05-20 03:05:08'),
+(21, 3, 'Secondary Item', NULL, NULL, '2022-06-03 20:50:59', '2022-06-03 20:50:59');
 
 -- --------------------------------------------------------
 
@@ -146,18 +175,28 @@ CREATE TABLE `card_members` (
 
 CREATE TABLE `invoices` (
   `id` bigint(20) NOT NULL,
+  `customer_id` bigint(20) NOT NULL,
   `project_id` bigint(20) DEFAULT NULL,
-  `order_code` varchar(150) NOT NULL,
+  `order_code` varchar(150) DEFAULT NULL,
   `issue_date` date NOT NULL,
   `due_date` date NOT NULL,
-  `customer_id` bigint(20) NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  `payment_date` date NOT NULL,
+  `payment_date` date DEFAULT NULL,
   `payment_note` text,
-  `receive_amount` double NOT NULL,
-  `status` varchar(30) NOT NULL DEFAULT 'NOT PAID'
+  `total_amount` double NOT NULL DEFAULT '0',
+  `receive_amount` double NOT NULL DEFAULT '0',
+  `status` varchar(30) NOT NULL DEFAULT 'NOT PAID',
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoices`
+--
+
+INSERT INTO `invoices` (`id`, `customer_id`, `project_id`, `order_code`, `issue_date`, `due_date`, `payment_date`, `payment_note`, `total_amount`, `receive_amount`, `status`, `created_at`, `updated_at`) VALUES
+(8, 27, 3, NULL, '2022-05-13', '2022-05-13', NULL, NULL, 1000000, 0, 'Paid', '2022-05-13 00:26:22', '2022-05-13 18:34:31'),
+(9, 43, NULL, NULL, '2022-05-19', '2022-05-31', NULL, NULL, 1000000, 0, 'Not Paid', '2022-05-19 00:27:36', '2022-05-19 00:27:36'),
+(10, 65, 3, NULL, '2022-06-04', '2022-06-04', NULL, NULL, 1000000, 0, 'Not Paid', '2022-06-03 20:35:11', '2022-06-03 20:35:11');
 
 -- --------------------------------------------------------
 
@@ -167,6 +206,7 @@ CREATE TABLE `invoices` (
 
 CREATE TABLE `invoice_items` (
   `id` bigint(20) NOT NULL,
+  `invoice_id` bigint(20) NOT NULL,
   `name` varchar(150) NOT NULL,
   `description` text NOT NULL,
   `qty` int(11) NOT NULL,
@@ -196,11 +236,9 @@ CREATE TABLE `problems` (
 
 CREATE TABLE `projects` (
   `id` bigint(20) NOT NULL,
+  `code` varchar(150) DEFAULT NULL,
+  `customer_id` bigint(20) NOT NULL,
   `name` varchar(150) DEFAULT NULL,
-  `unit_id` bigint(20) DEFAULT NULL,
-  `pic_id` bigint(20) DEFAULT NULL,
-  `master_id` bigint(20) DEFAULT NULL,
-  `owner_id` bigint(20) DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `status` varchar(30) DEFAULT NULL,
@@ -212,8 +250,10 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`id`, `name`, `unit_id`, `pic_id`, `master_id`, `owner_id`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Pembuatan Aplikasi S', 1, 3, 4, 5, NULL, NULL, 'DROPPED', '2022-02-20 18:52:28', '2022-02-20 19:10:42');
+INSERT INTO `projects` (`id`, `code`, `customer_id`, `name`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`) VALUES
+(1, NULL, 27, 'Pembuatan Aplikasi S', '2022-05-07', '2022-05-07', 'Active', '2022-02-20 18:52:28', '2022-05-07 08:51:27'),
+(3, 'No. Kontrak', 64, 'Project Pemasangan Lampu', '2022-05-08', '2022-05-16', 'Completed', '2022-05-07 08:42:05', '2022-05-07 09:12:30'),
+(4, '', 65, 'Justfunded.com', '2022-05-20', '2022-05-29', 'Active', '2022-05-19 19:22:09', '2022-05-19 19:22:09');
 
 -- --------------------------------------------------------
 
@@ -295,72 +335,21 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `userpass`, `created_at`, `updated_at`) VALUES
 (2, 1, 'Unit', 'unit@gmail.com', NULL, '2022-02-20 08:23:19', '2022-02-20 17:28:45'),
-(5, 4, 'Owner', 'owner@gmail.com', 'owner', '2022-02-20 17:29:37', '2022-02-20 17:29:37'),
 (6, 5, 'Developer', 'developer@gmail.com', 'developer', '2022-02-20 17:29:53', '2022-02-20 17:29:53'),
-(7, 4, 'Customer', 'owner@gmail.com', 'owner', '2022-05-06 01:32:26', '2022-05-06 01:32:26'),
-(8, 4, 'Owner 1', 'owner@gmail.com', 'owner', '2022-05-06 01:32:30', '2022-05-06 01:32:30'),
-(9, 4, 'Owner 2', 'owner@gmail.com', 'owner', '2022-05-06 01:32:41', '2022-05-06 01:32:41'),
-(10, 4, 'Owner 3', 'owner@gmail.com', 'owner', '2022-05-06 01:32:41', '2022-05-06 01:32:41'),
-(11, 4, 'Owner 4', 'owner@gmail.com', 'owner', '2022-05-06 01:32:52', '2022-05-06 01:32:52'),
-(12, 4, 'Owner 5', 'owner@gmail.com', 'owner', '2022-05-06 01:32:52', '2022-05-06 01:32:52'),
-(13, 4, 'Owner 6', 'owner@gmail.com', 'owner', '2022-05-06 01:32:52', '2022-05-06 01:32:52'),
-(14, 4, 'Owner 7', 'owner@gmail.com', 'owner', '2022-05-06 01:32:52', '2022-05-06 01:32:52'),
-(15, 4, 'Owner 8', 'owner@gmail.com', 'owner', '2022-05-06 01:33:06', '2022-05-06 01:33:06'),
-(16, 4, 'Owner 9', 'owner@gmail.com', 'owner', '2022-05-06 01:33:06', '2022-05-06 01:33:06'),
-(17, 4, 'Owner 10', 'owner@gmail.com', 'owner', '2022-05-06 01:33:06', '2022-05-06 01:33:06'),
-(18, 4, 'Owner 11', 'owner@gmail.com', 'owner', '2022-05-06 01:33:06', '2022-05-06 01:33:06'),
-(19, 4, 'Owner 12', 'owner@gmail.com', 'owner', '2022-05-06 01:33:06', '2022-05-06 01:33:06'),
-(20, 4, 'Owner 13', 'owner@gmail.com', 'owner', '2022-05-06 01:33:06', '2022-05-06 01:33:06'),
-(21, 4, 'Owner 14', 'owner@gmail.com', 'owner', '2022-05-06 01:33:06', '2022-05-06 01:33:06'),
-(22, 4, 'Owner 15', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(23, 4, 'Owner 16', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(24, 4, 'Owner 17', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(25, 4, 'Owner 18', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(26, 4, 'Owner 19', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(27, 4, 'Owner 20', 'bagas@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(28, 4, 'Owner 21', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(29, 4, 'Owner 22', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(30, 4, 'Owner 23', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(31, 4, 'Owner 24', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(32, 4, 'Owner 25', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(33, 4, 'Owner 26', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(34, 4, 'Owner 27', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(35, 4, 'Owner 28', 'owner@gmail.com', 'owner', '2022-05-06 01:34:02', '2022-05-06 01:34:02'),
-(36, 4, 'wew', 'wew@gmail.com', NULL, '2022-05-05 22:04:47', '2022-05-05 22:04:47'),
-(37, 4, 'qq', 'qq@gmail.com', NULL, '2022-05-05 22:05:22', '2022-05-05 22:05:22'),
-(38, 4, 'zxc', 'zxc@gmail.com', NULL, '2022-05-05 22:07:00', '2022-05-05 22:07:00'),
-(39, 4, 'ad', 'ad@gmail.com', NULL, '2022-05-05 22:07:21', '2022-05-05 22:07:21'),
 (40, 1, 'Unit', 'unit@gmail.com', NULL, '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(41, 4, 'Owner', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
 (42, 5, 'Developer', 'developer@gmail.com', 'developer', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(43, 4, 'Customer', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(44, 4, 'Owner 1', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(45, 4, 'Owner 2', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(46, 4, 'Owner 3', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(47, 4, 'Owner 4', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(48, 4, 'Owner 5', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(49, 4, 'Owner 6', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(50, 4, 'Owner 7', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(51, 4, 'Owner 8', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(52, 4, 'Owner 9', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(53, 4, 'Owner 10', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(54, 4, 'Owner 11', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(55, 4, 'Owner 12', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(56, 4, 'Owner 13', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(57, 4, 'Owner 14', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(58, 4, 'Owner 15', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(59, 4, 'Owner 16', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(60, 4, 'Owner 17', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(61, 4, 'Owner 18', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(62, 4, 'Owner 19', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(63, 4, 'Owner 20', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(64, 4, 'Owner 21', 'owner@gmail.com', 'owner', '2022-05-06 10:24:15', '2022-05-06 10:24:15'),
-(65, 4, 'qq', 'wew@gmail.com', NULL, '2022-05-06 07:10:47', '2022-05-06 07:10:47'),
-(66, 4, 'awesome', 'awesome@gmail.com', NULL, '2022-05-06 07:13:57', '2022-05-06 07:13:57');
+(65, 4, 'Rangga Djati', 'rangga101@gmail.com', NULL, '2022-05-19 19:15:09', '2022-06-03 22:44:23'),
+(66, 4, 'Another Customer', 'another@gmail.com', NULL, '2022-06-03 20:43:36', '2022-06-03 22:44:02');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `attendances`
+--
+ALTER TABLE `attendances`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `backlogs`
@@ -452,6 +441,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `attendances`
+--
+ALTER TABLE `attendances`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `backlogs`
 --
 ALTER TABLE `backlogs`
@@ -467,7 +462,7 @@ ALTER TABLE `backlogs_rules`
 -- AUTO_INCREMENT for table `cards`
 --
 ALTER TABLE `cards`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `card_comments`
@@ -479,7 +474,7 @@ ALTER TABLE `card_comments`
 -- AUTO_INCREMENT for table `card_items`
 --
 ALTER TABLE `card_items`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `card_members`
@@ -491,7 +486,7 @@ ALTER TABLE `card_members`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `invoice_items`
@@ -509,7 +504,7 @@ ALTER TABLE `problems`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -533,7 +528,7 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- Constraints for dumped tables

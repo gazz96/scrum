@@ -17,6 +17,8 @@
 	<div class="d-flex align-items-center mb-4">
 		<h1 class="h3 text-gray-800 font-weight-bold mr-3 mb-0">Invoices</h1>
 		<a href="#modal-form-invoice" class="btn btn-sm btn-primary"  data-toggle="modal">Buat Baru</a>
+        
+		
 	</div>
 	
 	<div class="row">

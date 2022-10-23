@@ -22,7 +22,6 @@
     <link href="{{ base_url('/assets/main/plugins/datatables/datatables.min.css') }}" rel="stylesheet" >
 
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-	
     
 	@yield('header')
 
@@ -476,7 +475,7 @@
     <script src="{{ base_url('assets/sbadmin/js/sb-admin-2.min.js') }}"></script>
     <script src="{{ base_url('assets/main/plugins/datatables/datatables.min.js') }}"></script>
     <script src="https://unpkg.com/currency.js@2.0.4/dist/currency.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ base_url('assets/main/js/helper.js') }}"></script>
     <script>
         window.BASE_URL = "{{base_url()}}";

@@ -81,7 +81,7 @@
 
 <form action="" id="form-invoice">
     <input type="hidden" name="id" id="i-id">
-    <input type="hidden" name="customer_id" id="i-customer_id">
+    
     <!-- Modal Invoice -->
     <div class="modal fade" id="modal-form-invoice" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -95,7 +95,9 @@
                 <div class="modal-body">
                     <div class="form-group position-relative">
                         <label for="i-customer_autocomplete">Customer</label>
-                        <input id="i-customer_autocomplete" class="form-control auto-complete">
+                        <select class="form-control customer_id" id="i-customer_id">
+                            <option value="">Pilih</option>
+                        </select>
                     </div>
 
                     <div class="form-group position-relative">
@@ -126,9 +128,6 @@
                         </div>
 
                     </div>
-
-                    
-
 
                 </div>
                 <div class="modal-footer">

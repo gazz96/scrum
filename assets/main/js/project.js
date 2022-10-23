@@ -1,6 +1,7 @@
+
 $(function(){
 
-
+    let customerSelection;
     let CardItemFields = {
         id: null,
         description: null,
@@ -24,7 +25,7 @@ $(function(){
             loadMainTabsData: async () => {
                 let project = await Project.Models.show($('#i-project_id').val())
                 let invoice = await Invoice.Models.getTotalByProject($('#i-project_id').val())
-                let tasks = await Project.Models.getTotalTask($('#i-project_id').val())
+                let tasks   = await Project.Models.getTotalTask($('#i-project_id').val())
                 
                 let deadline = project.deadline;
                 if(deadline == 0) {
@@ -38,6 +39,9 @@ $(function(){
                 $('#project-total-invoices').html(`${Rp(invoice.paided_invoice)}/${Rp(invoice.total_invoice)}`)
                 $('#project-progress-bar').css('width', `${percentage.toFixed(2)}%`)
                 $('#project-progress').html(`${percentage.toFixed(2)}%`)
+
+
+                customerSelection = Invoice.Helpers.customerSelection('#i-customer_id');
             },
 
         },
@@ -226,7 +230,11 @@ $(function(){
         }
     })
 
-    $(document).on('keypress', '.card-item-input', async function(e){
+    $(document).on('keydown', '.card-item-input', async function(e){
+        if(e.key == "Escape" ) {
+            $(this).parent().remove();  
+        }
+
         if(e.which == 13 ) {
             let cardItem = await Card.Models.createItem({
                 card_id: $(this).parent().parent().data('list_id'),
@@ -336,53 +344,6 @@ $(function(){
     // Main Tab
     Project.Helpers.loadMainTabsData();
 
-
-    let isSearching = false;
-    let customerAutoComplete = $('#i-customer_autocomplete');
-	customerAutoComplete.on('keyup', async function(e){
-        e.preventDefault();
-        $('#i-customer_id').val('');
-        $('.results-autocomplete').remove();
-
-        if($(this).val().length <= 3) return;
-
-        
-		
-
-		let value = $(this).val();
-        let customers = await $.ajax({
-            url: `${BASE_URL}api/customers`,
-            data: {
-                search: {
-                    value: value
-                },
-                length: 10
-            }
-        })
-
-        $('.results-autocomplete').remove();
-        customerAutoComplete.after(`<div class="results-autocomplete mt-2" style="position: absolute; top: 100%; background-color: #fff; z-index: 5;"></div>`);
-
-        if( customers.data.length ) {
-            customers.data.map( customer => $('.results-autocomplete').append(
-                `<div class="results-item mb-1 border px-2 py-1"><a href="javascript:void(0)" data-id="${customer.id}">${customer.id} - ${customer.name} (${customer.email})</a></div>`
-            ))
-        } else {
-            $('.results-autocomplete').append(
-                `<div class="results-item mb-1 border px-2 py-1"><a href="javascript:void(0)" data-id="">No results</a></div>`
-            )
-        }
-
-        isLoading = false;
-	})
-
-	$(document).on('click', '.results-item a', function(e){
-		e.preventDefault();
-        if( !$(this).data('id') ) return;
-		$('#i-customer_id').val($(this).data('id'));
-		$('#i-customer_autocomplete').val($(this).text());
-		$('.results-autocomplete').remove();
-	})
 
     let tableInvoiceItems = $('#table-invoice-items')
     let invoiceTemplateRow = ( no, name = "", description = "", qty = 0, price = 0, amount = 0 ) => {

@@ -49,8 +49,7 @@ class Customers extends MY_Controller {
         $customer = User::customer()->findOrFail($id);
         $update = $customer->update($this->input->post([
             'name',
-            'description',
-            'status'
+            'email',
         ]));
         $this->output->set_status_header(200);
         $this->output->set_content_type('application/json', 'utf-8');
